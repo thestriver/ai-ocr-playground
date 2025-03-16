@@ -22,10 +22,13 @@ technologies and a focus on developer experience.
 
 1. Clone the repository
 2. Install dependencies:
+   
    ```bash
    npm install
    ```
+
 3. Set up your environment variables:
+   
    ```env
    MISTRAL_API_KEY=
    OPENAI_API_KEY=
@@ -33,6 +36,7 @@ technologies and a focus on developer experience.
    ANTHROPIC_API_KEY=
    ```
 4. Run the development server:
+   
    ```bash
    npm run dev
    ```
@@ -80,42 +84,3 @@ technologies and a focus on developer experience.
 - **Caching**: Results caching for repeated document analysis
 - **Type Safety**: Full TypeScript implementation with strict type checking
 - **Error Boundaries**: Graceful error handling at component level
-
-## Technical Implementation
-
-### Model Configuration
-- Configurable context windows
-- Provider-specific optimizations
-- Extensible model registry
-
-## Development
-
-\`\`\`bash
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env.local
-
-# Run development server
-npm run dev
-\`\`\`
-
-## Environment Variables
-\`\`\`env
-OPENAI_API_KEY=your_key
-GOOGLE_API_KEY=your_key
-MISTRAL_API_KEY=your_key
-\`\`\`
-
-## Future Enhancements
-- [ ] Batch processing capabilities
-- [ ] Result comparison analytics
-- [ ] Custom model fine-tuning interface
-- [ ] Export functionality for analysis
-
-## License
-MIT
-
----
-Built with ❤️ using Next.js and Vercel AI SDK 
