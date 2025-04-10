@@ -195,11 +195,12 @@ export default function Playground() {
                       Preview
                     </Button>
                     <button
+                      type="button"
                       onClick={() => removeFile(index)}
-                      className="text-muted-foreground hover:text-destructive transition-colors"
+                      className="flex items-center justify-center gap-x-2 text-muted-foreground hover:text-destructive transition-colors bg-secondary/50 hover:bg-secondary/70 px-2 py-1 rounded-md"
                       title="Remove file"
                     >
-                      <XIcon className="h-4 w-4" />
+                      Clear <XIcon className="h-4 w-4 text-red-500" />
                     </button>
                   </div>
                 </div>

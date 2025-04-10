@@ -112,13 +112,13 @@ export function FileUpload({ onFilesSelected }: FileUploadProps) {
             Support for PDF documents OCR up to {formatFileSize(MAX_FILE_SIZE)}
           </p>
           {error && (
-            <p className="text-xs text-destructive mt-1">
+            <p className="text-sm text-destructive mt-1">
               {error}
             </p>
           )}
         </div>
         <Button variant="outline" size="sm" onClick={handleButtonClick} className="mt-2">
-          Select Files
+          Select File
         </Button>
       </div>
     </div>
