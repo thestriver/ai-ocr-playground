@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/ocr": {
+    "app/api/**/*": {
       "maxDuration": 60
     }
   }
