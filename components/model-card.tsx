@@ -52,13 +52,13 @@ export function ModelCard({
                   <div className="text-xs text-muted-foreground mb-2">
                     Processed in {(result.processingTime / 1000).toFixed(2)}s
                   </div>
-                  <div className="whitespace-pre-wrap font-mono text-xs bg-muted p-3 rounded-md max-h-[400px] overflow-auto">
+                  <div className="whitespace-pre-wrap font-mono text-xs bg-gray-900 p-3 rounded-md max-h-[420px] overflow-auto">
                     {typeof result.result === "string" ? (
                       <ReactMarkdown
                         components={{
                           code({ className, children }) {
                             return (
-                              <code className={`${className} block p-2 bg-gray-800 rounded`}>
+                              <code className={`${className} block p-2 bg-gray-900 rounded`}>
                                 {children}
                               </code>
                             )

@@ -153,7 +153,7 @@ export default function Playground() {
       <header className="border-b">
         <div className="flex items-center h-14 px-4 gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-semibold"> 🔎 AI OCR Playground </span>
+            <span className="font-semibold"> 🔎 EasyOCR Eval</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
             {activePanels.length < 4 && (
@@ -168,7 +168,9 @@ export default function Playground() {
       </header>
 
       <div className="p-4 border-b">
-        <FileUpload onFilesSelected={handleFileUpload} />
+        {(!results || Object.keys(results).length === 0) && (
+          <FileUpload onFilesSelected={handleFileUpload} />
+        )}
 
         {uploadedFiles.length > 0 && (
           <div className="mt-4">
