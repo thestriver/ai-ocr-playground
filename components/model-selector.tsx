@@ -51,7 +51,7 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr-latest" }:
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="justify-between w-fit font-normal"
+          className="w-[360px] justify-between font-normal bg-slate-950 border-slate-800 hover:bg-slate-900 hover:border-slate-700"
         >
           <div className="flex items-center gap-2">
             {selectedModelData?.icon && (
@@ -60,6 +60,7 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr-latest" }:
                 alt={selectedModelData.label.split(" / ")[0]}
                 width={16}
                 height={16}
+                className="rounded-sm"
               />
             )}
             {selectedModel}
@@ -67,14 +68,14 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr-latest" }:
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit p-0 cursor-pointer bg-white dark:bg-slate-950 border rounded-lg shadow-lg" align="start">
-        <Command className="rounded-lg">
+      <PopoverContent className="w-[360px] p-0 cursor-pointer bg-slate-950 border-slate-800 rounded-md shadow-lg" align="start">
+        <Command className="rounded-md">
           <CommandInput
             placeholder="Search models..."
-            className="h-11 px-3 border-none focus:ring-0 rounded-t-lg bg-transparent"
+            className="px-3 py-1 w-[360px] border-none focus:ring-0 focus:ring-offset-0 focus:outline-none bg-transparent text-slate-200"
           />
           <CommandList className="px-1.5 pb-1.5">
-            <CommandEmpty className="py-2 text-center text-sm">No models found.</CommandEmpty>
+            <CommandEmpty className="py-2 text-center text-sm text-slate-400">No models found.</CommandEmpty>
             <CommandGroup>
               {models.map((model) => (
                 <CommandItem
@@ -84,7 +85,7 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr-latest" }:
                     setSelectedModel(model.label)
                     setOpen(false)
                   }}
-                  className="flex items-center gap-2 px-2 py-1.5 rounded-sm text-sm aria-selected:bg-slate-100 dark:aria-selected:bg-slate-800"
+                  className="flex items-center gap-2 px-2 py-1.5 rounded-sm text-sm text-slate-200 aria-selected:bg-slate-800 hover:bg-slate-800"
                 >
                   <div className="flex items-center gap-2 flex-1">
                     <Image
@@ -92,6 +93,7 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr-latest" }:
                       alt={model.label.split(" / ")[0]}
                       width={16}
                       height={16}
+                      className="rounded-sm"
                     />
                     {model.label}
                   </div>
