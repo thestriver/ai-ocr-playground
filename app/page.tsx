@@ -11,37 +11,74 @@ import { FilePreviewModal } from "@/components/file-preview-modal"
 import { cn } from "@/lib/utils"
 import { useOCR } from "@/hooks/use-ocr"
 
+// Model descriptions and configurations
+const modelConfigs: Record<string, {
+  provider: string
+  model: string
+  description: string
+  contextWindow: string
+  website: string
+}> = {
+  "Mistral / mistral-ocr": {
+    provider: "Mistral",
+    model: "mistral-ocr",
+    description: "Mistral OCR comprehends each element of documents—media, text, tables, equations—with unprecedented accuracy and cognition. It extracts content in an ordered interleaved text and images format.",
+    contextWindow: "1000 pages",
+    website: "https://mistral.ai"
+  },
+  "OpenAI / gpt-4o": {
+    provider: "OpenAI",
+    model: "gpt-4o",
+    description: "GPT-4 Optimized is OpenAI's most advanced model, delivering exceptional performance across language, vision, and reasoning tasks with improved speed and reliability.",
+    contextWindow: "128,000 tokens",
+    website: "https://openai.com"
+  },
+  "OpenAI / gpt-4.1": {
+    provider: "OpenAI",
+    model: "gpt-4.1",
+    description: "GPT-4.1 is OpenAI's latest model, offering enhanced accuracy in document understanding and text extraction with improved context handling.",
+    contextWindow: "up to 1 million tokens of context",
+    website: "https://openai.com"
+  },
+  "OpenAI / gpt-4.1-mini": {
+    provider: "OpenAI",
+    model: "gpt-4.1-mini",
+    description: "GPT-4.1 Mini provides a lightweight and faster alternative for document processing while maintaining high accuracy in text extraction and formatting.",
+    contextWindow: "up to 1 million tokens of context",
+    website: "https://openai.com"
+  },
+  "Google / gemini-2.0-flash-exp": {
+    provider: "Google",
+    model: "gemini-2.0-flash-exp",
+    description: "Gemini 2.0 Flash Experimental delivers next-gen features and improved capabilities, including superior speed, native tool use, multimodal generation, and a 1M token context window.",
+    contextWindow: "1,000,000 tokens",
+    website: "https://ai.google.dev"
+  },
+  "Anthropic / claude-3.7-sonnet": {
+    provider: "Anthropic",
+    model: "claude-3.7-sonnet",
+    description: "Claude 3.7 Sonnet is Anthropic's latest model, delivering exceptional performance across language, vision, and reasoning tasks with improved efficiency.",
+    contextWindow: "200,000 tokens",
+    website: "https://anthropic.com"
+  }
+}
+
 // Default model configurations
 const defaultModels = [
   {
     id: 1,
-    provider: "Mistral",
-    model: "mistral-ocr-latest",
-    description:
-      "Mistral OCR comprehends each element of documents—media, text, tables, equations—with unprecedented accuracy and cognition. It extracts content in an ordered interleaved text and images format.",
-    contextWindow: "1000 pages",
-    selectorValue: "Mistral / mistral-ocr-latest",
-    website: "https://mistral.ai",
+    ...modelConfigs["Mistral / mistral-ocr"],
+    selectorValue: "Mistral / mistral-ocr"
   },
   {
     id: 2,
-    provider: "OpenAI",
-    model: "gpt-4o",
-    description:
-      "GPT-4 Optimized is OpenAI's most advanced model, delivering exceptional performance across language, vision, and reasoning tasks with improved speed and reliability.",
-    contextWindow: "128,000 tokens",
-    selectorValue: "OpenAI / gpt-4o",
-    website: "https://openai.com",
+    ...modelConfigs["OpenAI / gpt-4o"],
+    selectorValue: "OpenAI / gpt-4o"
   },
   {
     id: 3,
-    provider: "Google",
-    model: "gemini-2.0-flash-exp",
-    description:
-      "Gemini 2.0 Flash Experimental delivers next-gen features and improved capabilities, including superior speed, native tool use, multimodal generation, and a 1M token context window.",
-    contextWindow: "1,000,000 tokens",
-    selectorValue: "Google / gemini-2.0-flash-exp",
-    website: "https://ai.google.dev",
+    ...modelConfigs["Google / gemini-2.0-flash-exp"],
+    selectorValue: "Google / gemini-2.0-flash-exp"
   },
 ]
 
@@ -61,14 +98,8 @@ export default function Playground() {
     const newId = Math.max(...activePanels.map((p) => p.id)) + 1
     const newPanel = {
       id: newId,
-      provider: "Anthropic",
-      model: "claude-3.7-sonnet",
-      description:
-        "Claude 3.7 Sonnet is Anthropic's latest model, delivering exceptional performance across language, vision, and reasoning tasks with improved efficiency.",
-      contextWindow: "200,000 tokens",
-      selectorValue: "Anthropic / claude-3.7-sonnet",
-      website: "https://anthropic.com",
-      icon: "/icons/anthropic.svg",
+      ...modelConfigs["Anthropic / claude-3.7-sonnet"],
+      selectorValue: "Anthropic / claude-3.7-sonnet"
     }
 
     setActivePanels([...activePanels, newPanel])
@@ -224,7 +255,24 @@ export default function Playground() {
           return (
             <div key={panel.id} className="flex flex-col bg-background">
               <div className="flex items-center p-2 border-b">
-                <ModelSelector defaultModel={panel.selectorValue} />
+                <ModelSelector
+                  defaultModel={panel.selectorValue}
+                  onChange={(newModel: string) => {
+                    if (newModel in modelConfigs) {
+                      setActivePanels(panels =>
+                        panels.map(p =>
+                          p.id === panel.id
+                            ? {
+                              ...p,
+                              ...modelConfigs[newModel],
+                              selectorValue: newModel
+                            }
+                            : p
+                        )
+                      )
+                    }
+                  }}
+                />
                 <div className="ml-auto flex items-center gap-1">
                   {activePanels.length > 1 && (
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => removePanel(panel.id)}>

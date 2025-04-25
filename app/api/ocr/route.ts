@@ -137,15 +137,23 @@ export async function POST(req: NextRequest) {
               break
 
             case "openai":
+              // Map the model identifier to actual OpenAI model name
+              const openaiModelMap: Record<string, string> = {
+                'gpt-4o': 'gpt-4o',
+                'gpt-4.1': 'gpt-4.1',
+                'gpt-4.1-mini': 'gpt-4.1-mini'
+              }
+              const openaiModelName = openaiModelMap[model.model as string] || model.model
+              
               const openaiResult = await generateText({
-                model: openai.responses('gpt-4o'),
+                model: openai.responses(openaiModelName),
                 messages: [
                   {
                     role: 'user',
                     content: [
                       {
                         type: 'text',
-                        text: 'Extract and format the text content from this document.',
+                        text: 'Extract and format the text content from this document. Return only the extracted text content, without any prefixes or explanations.',
                       },
                       {
                         type: 'file',
@@ -169,7 +177,7 @@ export async function POST(req: NextRequest) {
                     content: [
                       {
                         type: 'text',
-                        text: 'Extract and format the text content from this document.',
+                        text: 'Extract and format the text content from this document. Return only the extracted text content, without any prefixes or explanations.',
                       },
                       {
                         type: 'file',
@@ -192,7 +200,7 @@ export async function POST(req: NextRequest) {
                     content: [
                       {
                         type: 'text',
-                        text: 'Extract and format the text content from this document.',
+                        text: 'Extract and format the text content from this document. Return only the extracted text content, without any prefixes or explanations.',
                       },
                       {
                         type: 'file',

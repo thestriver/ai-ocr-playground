@@ -24,6 +24,16 @@ const models = [
     icon: "/icons/openai.svg",
   },
   {
+    value: "openai-gpt4-1",
+    label: "OpenAI / gpt-4.1",
+    icon: "/icons/openai.svg",
+  },
+  {
+    value: "openai-gpt4-1-mini",
+    label: "OpenAI / gpt-4.1-mini",
+    icon: "/icons/openai.svg",
+  },
+  {
     value: "google-gemini-flash",
     label: "Google / gemini-2.0-flash-exp",
     icon: "/icons/google.svg",
@@ -37,12 +47,19 @@ const models = [
 
 interface ModelSelectorProps {
   defaultModel?: string
+  onChange?: (model: string) => void
 }
 
-export function ModelSelector({ defaultModel = "Mistral / mistral-ocr-latest" }: ModelSelectorProps) {
+export function ModelSelector({ defaultModel = "Mistral / mistral-ocr", onChange }: ModelSelectorProps) {
   const [open, setOpen] = useState(false)
   const [selectedModel, setSelectedModel] = useState(defaultModel)
   const selectedModelData = models.find(m => m.label === selectedModel)
+
+  const handleSelect = (model: string) => {
+    setSelectedModel(model)
+    setOpen(false)
+    onChange?.(model)
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -82,8 +99,7 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr-latest" }:
                   key={model.value}
                   value={model.value}
                   onSelect={() => {
-                    setSelectedModel(model.label)
-                    setOpen(false)
+                    handleSelect(model.label)
                   }}
                   className="flex items-center gap-2 px-2 py-1.5 rounded-sm text-sm text-slate-200 aria-selected:bg-slate-800 hover:bg-slate-800"
                 >

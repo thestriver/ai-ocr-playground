@@ -1,6 +1,7 @@
-import { ExternalLinkIcon, Loader2 } from "lucide-react"
+import { Check, Copy, ExternalLinkIcon, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ReactMarkdown from 'react-markdown'
+import { useState } from "react"
 
 interface ModelCardProps {
   provider: string
@@ -24,6 +25,14 @@ export function ModelCard({
   result,
   isProcessing,
 }: ModelCardProps) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
     <div className="border rounded-lg overflow-hidden">
       <div className="p-4">
@@ -49,8 +58,20 @@ export function ModelCard({
               <div>
                 <div className="text-sm font-medium">Results</div>
                 <div className="text-sm mt-1">
-                  <div className="text-xs text-muted-foreground mb-2">
-                    Processed in {(result.processingTime / 1000).toFixed(2)}s
+                  <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
+                    <div>Processed in {(result.processingTime / 1000).toFixed(2)}s</div>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="h-6 w-6 hover:bg-gray-800"
+                      onClick={() => handleCopy(typeof result.result === "string" ? result.result : JSON.stringify(result.result, null, 2))}
+                    >
+                      {copied ? (
+                        <Check className="h-3 w-3" />
+                      ) : (
+                        <Copy className="h-3 w-3" />
+                      )}
+                    </Button>
                   </div>
                   <div className="whitespace-pre-wrap font-mono text-xs bg-gray-900 p-3 rounded-md max-h-[420px] overflow-auto">
                     {typeof result.result === "string" ? (
@@ -62,6 +83,27 @@ export function ModelCard({
                                 {children}
                               </code>
                             )
+                          },
+                          table({ children }) {
+                            return (
+                              <div className="overflow-x-auto">
+                                <table className="min-w-full divide-y divide-gray-700">
+                                  {children}
+                                </table>
+                              </div>
+                            )
+                          },
+                          thead({ children }) {
+                            return <thead className="bg-gray-800">{children}</thead>
+                          },
+                          th({ children }) {
+                            return <th className="px-3 py-2 text-left text-xs font-semibold text-gray-300">{children}</th>
+                          },
+                          td({ children }) {
+                            return <td className="px-3 py-2 text-left whitespace-nowrap">{children}</td>
+                          },
+                          tr({ children }) {
+                            return <tr className="border-b border-gray-700">{children}</tr>
                           }
                         }}
                       >
