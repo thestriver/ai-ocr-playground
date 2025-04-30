@@ -39,6 +39,16 @@ const models = [
     icon: "/icons/google.svg",
   },
   {
+    value: "google-gemini-2.5-flash",
+    label: "Google / gemini-2.5-flash-preview-04-17",
+    icon: "/icons/google.svg",
+  },
+  {
+    value: "google-gemini-2.5-pro",
+    label: "Google / gemini-2.5-pro-exp-03-25",
+    icon: "/icons/google.svg",
+  },
+  {
     value: "anthropic-claude3sonnet",
     label: "Anthropic / claude-3.7-sonnet",
     icon: "/icons/anthropic.svg",
@@ -68,7 +78,7 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr", onChange
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[360px] justify-between font-normal bg-slate-950 border-slate-800 hover:bg-slate-900 hover:border-slate-700"
+          className="w-[390px] justify-between font-normal bg-slate-950 border-slate-800 hover:bg-slate-900 hover:border-slate-700"
         >
           <div className="flex items-center gap-2">
             {selectedModelData?.icon && (
@@ -85,7 +95,7 @@ export function ModelSelector({ defaultModel = "Mistral / mistral-ocr", onChange
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[360px] p-0 cursor-pointer bg-slate-950 border-slate-800 rounded-md shadow-lg" align="start">
+      <PopoverContent className="w-[390px] p-0 cursor-pointer bg-slate-950 border-slate-800 rounded-md shadow-lg" align="start">
         <Command className="rounded-md">
           <CommandInput
             placeholder="Search models..."
